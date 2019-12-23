@@ -1,5 +1,5 @@
 var json;
-var p=0;
+var tableStart=0;
 var responseLength;
 var paginationNo=5;
 
@@ -28,24 +28,24 @@ function CallAPi(){
 function ShowData(){
 
     enableOrDisableButton();
-    console.log("p"+p);
-    var tableBody=document.createElement("tbody");
-    var tableElement =document.getElementById("myTable");
+    console.log("TableStart"+tableStart);
+    let tableBody=document.createElement("tbody");
+    let tableElement =document.getElementById("myTable");
     tableElement.appendChild(tableBody); 
 
-    for(i=p;i<p+paginationNo;i++){
+    for(let i=tableStart;i<tableStart+paginationNo;i++){
         console.log("PaginationNO"+paginationNo)
         if(i>responseLength){
             break;
         }
-        var user=json[i];
-        var tableRow=document.createElement("tr");
+        let user=json[i];
+        let tableRow=document.createElement("tr");
         tableBody.appendChild(tableRow);
 
         for(userDetail in user){
-            var tableData=document.createElement("td");
+            let tableData=document.createElement("td");
             tableRow.appendChild(tableData);
-            var text=document.createTextNode(user[userDetail]);
+            let text=document.createTextNode(user[userDetail]);
             tableData.appendChild(text);
             // console.log(user[userDetail]);
         };
@@ -53,31 +53,31 @@ function ShowData(){
 }
 
 function next(){
-    p+=paginationNo;
+    tableStart+=paginationNo;
     deleteRows();
     //console.log(sessionStorage.getItem('Data'))
     ShowData();
     //ShowData(sessionStorage.getItem('Data'),p);
 }
 function previous(){
-    p-=paginationNo;
+    tableStart-=paginationNo;
     deleteRows();
     ShowData();
     //ShowData(sessionStorage.getItem('Data'),p);
 }
 function deleteRows(){
-    var myTable = document.getElementById("myTable");
-    var rowCount = myTable.rows.length;
+    let myTable = document.getElementById("myTable");
+    let rowCount = myTable.rows.length;
     for (let x=rowCount-1; x>0; x--) {
          myTable.deleteRow(x);
     } 
 }
 
 function assignPaginationNo(){
-    var dropDown = document.getElementById("DropDown");
-    var selectedOption = dropDown.options[dropDown.selectedIndex].value;
+    let dropDown = document.getElementById("DropDown");
+    let selectedOption = dropDown.options[dropDown.selectedIndex].value;
     //console.log(n);
-    p=0;
+    tableStart=0;
     paginationNo=Number(selectedOption);
     deleteRows();
     // CallAPi();
@@ -85,13 +85,13 @@ function assignPaginationNo(){
 }
 
 function enableOrDisableButton(){
-    if(p==0){
+    if(tableStart==0){
         document.getElementById("previous").disabled=true;
     }
     else{
         document.getElementById("previous").disabled=false;
     }
-    if(p>=(responseLength-paginationNo)){          //comparing if Difference is greater than pagination No. or Not
+    if(tableStart>=(responseLength-paginationNo)){          //comparing if Difference is greater than pagination No. or Not
         //console.log("PaginationNO"+paginationNo)
         document.getElementById("next").disabled=true;
     }
