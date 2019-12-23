@@ -73,7 +73,7 @@ function deleteRows(){
     } 
 }
 
-function manipulatePaginationNo(){
+function assignPaginationNo(){
     var dropDown = document.getElementById("DropDown");
     var selectedOption = dropDown.options[dropDown.selectedIndex].value;
     //console.log(n);
