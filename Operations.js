@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded",()=>{CallAPi();})
 
 function CallAPi(){
     let request=new XMLHttpRequest();
-    request.open("GET","http://jsonplaceholder.typicode.com/posts/",true);
+    request.open("GET","https://jsonplaceholder.typicode.com/posts/",true);
     request.send();
     request.onload=()=>{
         json=JSON.parse(request.responseText);
