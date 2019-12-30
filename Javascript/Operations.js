@@ -14,7 +14,6 @@ function CallAPi(){
         json=JSON.parse(request.responseText);
         newjson=json;
         ShowData();
-        // saveData(json);
         responseLength= json.length;
         console.log(responseLength);
         // console.log(json);
