@@ -1,4 +1,5 @@
 var json;
+var newjson;
 var tableStart=0;
 var responseLength;
 var paginationNo=5;
@@ -11,6 +12,7 @@ function CallAPi(){
     request.send();
     request.onload=()=>{
         json=JSON.parse(request.responseText);
+        newjson=json;
         ShowData();
         // saveData(json);
         responseLength= json.length;
@@ -26,7 +28,7 @@ function CallAPi(){
 //  }
 
 function ShowData(){
-
+   // console.log("JSON"+json);
     enableOrDisableButton();
     console.log("TableStart"+tableStart);
     let tableBody=document.createElement("tbody");
@@ -35,10 +37,11 @@ function ShowData(){
 
     for(let i=tableStart;i<tableStart+paginationNo;i++){
         console.log("PaginationNO"+paginationNo)
-        if(i>responseLength){
+        if(i>newjson.length){
             break;
         }
-        let user=json[i];
+        let user=newjson[i];
+        console.log(user);
         let tableRow=document.createElement("tr");
         tableBody.appendChild(tableRow);
 
@@ -74,13 +77,11 @@ function deleteRows(){
 }
 
 function assignPaginationNo(){
+    tableStart=0;
     let dropDown = document.getElementById("DropDown");
     let selectedOption = dropDown.options[dropDown.selectedIndex].value;
-    //console.log(n);
-    tableStart=0;
     paginationNo=Number(selectedOption);
     deleteRows();
-    // CallAPi();
     ShowData();
 }
 
@@ -91,11 +92,42 @@ function enableOrDisableButton(){
     else{
         document.getElementById("previous").disabled=false;
     }
-    if(tableStart>=(responseLength-paginationNo)){          //comparing if Difference is greater than pagination No. or Not
+    if(tableStart>=(newjson.length-paginationNo)){          //comparing if Difference is greater than pagination No. or Not
         //console.log("PaginationNO"+paginationNo)
         document.getElementById("next").disabled=true;
     }
     else{
         document.getElementById("next").disabled=false;
     } 
+}
+
+function Search(){
+    tableStart=0;
+    deleteRows();
+    var input, searchText;
+
+    let dropDown = document.getElementById("SearchDropDown");
+    let selectedOption = dropDown.options[dropDown.selectedIndex].value;
+
+    input= document.getElementById("SearchInput");
+    compareWith= input.value.toUpperCase();
+
+    let SearchJson=[];
+    for(let i=0;i<responseLength;i++){
+        let user=json[i];
+        let keys = Object.keys(user);
+        if (user[keys[Number(selectedOption)]].toString().toUpperCase().indexOf(compareWith)>-1){
+            SearchJson.push(user);
+           //console.log("SEARCHJSONNNN"+SearchJson);
+        }        
+    };
+    newjson=SearchJson;
+    ShowData();
+}
+
+function allData(){
+    newjson=json;
+    deleteRows();
+    tableStart=0;
+    ShowData();
 }

@@ -4,18 +4,29 @@
         <script type="text/javascript" src="Operations.js"></script>
         <link rel="stylesheet" href="Style.css">
     </head>
-<body >
+<body>
+    <div class="searchbar">
+    <input type="text" id="SearchInput" >
+    <button id ="searchButton" onclick="Search()">Search</button>
+    <button id="allDataButton" onclick="allData()">All Data(First Page)</button>
+    <select id="SearchDropDown" value="Search-By">
+        <option value="0">UserId</option>
+        <option value="1">ID</option>
+        <option value="2">Title</option>
+        <option value="3">Body</option>
+    </select>
+    </div>
     <table id="myTable">
         <thead>
             <tr class=TableRow>
-                <th>User ID</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Body</th>
+                <th width="60px">User ID</th>
+                <th width="20px">ID</th>
+                <th width="300px">Title</th>
+                <th width="800px">Body</th>
             </tr>
         </thead>
     </table>
-
+<div class="container">
 <button onclick="next()" id="next">Next</button>
 <button onclick="previous()" id="previous">Previous</button>
 <select id="DropDown" onchange="assignPaginationNo()">
@@ -24,6 +35,7 @@
     <option value="15">15</option>
     <option value="20">20</option>
   </select>
+</div>
 </body>
 </html>
 
